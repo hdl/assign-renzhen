@@ -1,62 +1,49 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
-void extractMostSeenEvenDigitProblem1YourName(int num){
-    int original = num;
-    int table[10]={0};
-    int visit_seq[10]={0};
+
+int num_of_even(int num){
     int counter=0;
-    int total_num=0;
-    int even_num=0;
-    int max;
-    if(num==0){
-        total_num=1;
-        even_num=1;
-        table[0]=1;
-        visit_seq[0]=0;
-        counter++;
-    }
+    if(num==0)
+        return 0;
     while(num/10!=0 || num%10!=0){
-        if(num%10%2==0){
-            if(table[num%10]==0){// the first time
-                visit_seq[counter] = num%10;
-                counter++;
-            }
-            even_num++;
-            table[num%10]++;
+        if(num%10%2==0)
+            counter++;
+        num=num/10;
+    }
+    //cout << num << ":" << counter;
+    return counter;
 
+}
+bool compare_fun(int a, int b){
+    //cout <<"here"<<endl;
+    if(num_of_even(a)>num_of_even(b))
+        return 1;
+    else
+        return 0;
+}
+void updateArrayProblem2YourName(int* array, int size){
+    //num_of_even(array[0]);
+    sort(array, array+size, compare_fun);
+
+    cout << "  The updated array:"<<endl;
+        for(int i=0; i<size; i++){
+            cout<<"    "<<array[i]<<endl;
         }
-
-        num = num/10;
-        total_num++;
-
-    }
-
-
-    cout << "    There is/are " <<total_num<<" digit(s) with "<<even_num<<" even digit(s)."<<endl;
-    cout << "    With the "<<even_num<<" even digit(s),"<<endl<<endl;
-
-    max = table[visit_seq[0]];
-
-    for(int i=0; i<counter; i++){
-        cout<<"        "<<visit_seq[i]<<" occurs "<<table[visit_seq[i]]<<" time(s)"<<endl;
-        if(table[max]<table[visit_seq[i]])
-            max=visit_seq[i];
-    }
-    cout << "    Digit "<<max<<" is seen "<<table[max]<< " time(s) in "<< original <<endl;
-
 }
 
 int main(){
     int choice;
     int num;
+    int array[100];
     while(1){
         cout <<"*********************************************************"<<endl;
         cout <<"*                          MENU                         *"<<endl;
-        cout <<"* 1. Calling extractMostSeenEvenDigitProblem1YourName() *"<<endl;
-        cout <<"* 2. Quit *"<<endl;
+        cout <<"* 1. Calling updateArrayProblem2YourName()              *"<<endl;
+        cout <<"* 2. Quit                                               *"<<endl;
         cout <<"*********************************************************"<<endl;
         cout <<"Select an option (1 or 2): ";
         cin >> choice;
@@ -64,11 +51,19 @@ int main(){
             cout <<"  Have Fun ..."<<endl;
             return 0;
         }
-        cout <<"  Enter an integer: ";
+        cout <<"  How many integers? ";
         cin >> num;
-        cout <<"  Calling displayDigitProblem1YourName() –"<<endl;
+        for(int i=0; i<num; i++){
+            cout << "    Enter interger #"<<i+1<<": ";
+            cin >> array[i];
+        }
+        cout << "  The original array:"<<endl;
+        for(int i=0; i<num; i++){
+            cout<<"    "<<array[i]<<endl;
+        }
+        cout <<"  Calling updateArrayProblem2YourName() –"<<endl;
 
-        extractMostSeenEvenDigitProblem1YourName(num);
+        updateArrayProblem2YourName(array, num);
     }
 
 }
