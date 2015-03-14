@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <set>
 
 using namespace std;
 
@@ -13,6 +14,8 @@ void updateBasedOnEvenUncommonYourName(int* orignal_array, int size){
     int table[10]={0};
     int increase[10]={0};
     int show_at[10] = {-1};
+    set<int> myset;
+    set<int>::iterator it;
 
     for(int i=0; i<size; i++){
         array[i]=abs(array[i]);
@@ -39,9 +42,20 @@ void updateBasedOnEvenUncommonYourName(int* orignal_array, int size){
 
     cout << "  The updated array:"<<endl;
         for(int i=8; i>=0; i=i-2){
-            cout << i << " shown in " << table[i] << "nums"<<endl;
-            if(table[i]==1)
-            cout<<"    "<<orignal_array[show_at[i]]<<endl;
+            //cout << i << " shown in " << table[i] << "nums"<<endl;
+            if(table[i]==1){
+                if(myset.find(orignal_array[show_at[i]])==myset.end()){
+                    cout << "      "<<orignal_array[show_at[i]]<<endl;
+                    myset.insert(orignal_array[show_at[i]]);
+                }
+
+            }
+        }
+        for(int i=0; i<size; i++){
+            if(myset.find(orignal_array[i])==myset.end()){
+                cout << "      "<<orignal_array[i]<<endl;
+                myset.insert(orignal_array[i]);
+            }
         }
 }
 
