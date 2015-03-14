@@ -7,6 +7,7 @@ using namespace std;
 
 int num_of_even(int num){
     int counter=0;
+    num = abs(num);
     if(num==0)
         return 0;
     while(num/10!=0 || num%10!=0){

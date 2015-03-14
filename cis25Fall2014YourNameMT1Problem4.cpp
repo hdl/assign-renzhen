@@ -4,17 +4,27 @@
 
 using namespace std;
 
-void displayDigitProblem3YourName(int* array, int size){
+void updateBasedOnEvenUncommonYourName(int* orignal_array, int size){
+
+    int *array = new int[size];
+    for(int i=0; i<size; i++){
+        array[i]=orignal_array[i];
+    }
     int table[10]={0};
     int increase[10]={0};
+    int show_at[10] = {-1};
+
     for(int i=0; i<size; i++){
         array[i]=abs(array[i]);
         for(int j=0; j<10; j++)
             increase[j]=0;
 
-        if(array[i]==0)
+        if(array[i]==0){
             increase[0]=1;
+            show_at[0] = i;
+        }
         while(array[i]/10!=0 || array[i]%10!=0){
+            show_at[array[i]%10]=i;
             if(array[i]%10%2==0){
                 increase[array[i]%10]=1;
             }
@@ -26,25 +36,13 @@ void displayDigitProblem3YourName(int* array, int size){
         }
 
     }
-    int total=0;
-    for(int i=0; i<10; i++){
-        if(table[i]==1){
-            total++;
-        }
-    }
 
-    //for(int i=8; i>=0; i=i-2){
-    //        cout << i << " shown in " << table[i] << "nums"<<endl;
-    //}
-
-    cout << "    From all of the given intergers,"<<endl;
-    cout << "      There is/are "<<total<<" uncommon even digit(s)."<<endl;
-    cout << "      The uncommon even digit(s) is/are"<<endl;
-    for(int i=0; i<10; i++){
-        if(table[i]==1){
-            cout << "        "<<i<<endl;
+    cout << "  The updated array:"<<endl;
+        for(int i=8; i>=0; i=i-2){
+            cout << i << " shown in " << table[i] << "nums"<<endl;
+            if(table[i]==1)
+            cout<<"    "<<orignal_array[show_at[i]]<<endl;
         }
-    }
 }
 
 int main(){
@@ -54,7 +52,7 @@ int main(){
     while(1){
         cout <<"*********************************************************"<<endl;
         cout <<"*                          MENU                         *"<<endl;
-        cout <<"* 1. Calling displayDigitProblem3YourName()              *"<<endl;
+        cout <<"* 1. Calling Calling updateBasedOnEvenUncommonYourName()*"<<endl;
         cout <<"* 2. Quit                                               *"<<endl;
         cout <<"*********************************************************"<<endl;
         cout <<"Select an option (1 or 2): ";
@@ -70,9 +68,14 @@ int main(){
             cin >> array[i];
         }
 
-        cout <<"  Calling displayDigitProblem3YourName() –"<<endl;
+        cout << "  The original array:"<<endl;
+        for(int i=0; i<num; i++){
+            cout<<"    "<<array[i]<<endl;
+        }
 
-        displayDigitProblem3YourName(array, num);
+        cout <<"  Calling Calling updateBasedOnEvenUncommonYourName()–"<<endl;
+
+        updateBasedOnEvenUncommonYourName(array, num);
     }
 
 }
